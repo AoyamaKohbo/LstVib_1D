@@ -48,7 +48,13 @@
         \label{eq:RtnEqn}
   \end{align}
 
-  <p>式\eqref{eq:DiscStateEq}を次式のように変形します。</p>
+  <p>離散時間状態方程式\eqref{eq:DiscStateEq}で計算される状態\(x(n)\)、\(\dot x(n)\)
+    は逐次最小二乗法に対して計測結果を模擬します。離散時間状態方程式\eqref{eq:DiscStateEq}の
+    入力\(u(n)=\sin(2\pi fnT)\)に対して\(f=10\)[Hz]で変位\(x(n)\)、速度\(\dot{x}(n)\)を計算します。
+    その計算結果に次式の<a href="https://aoyamakohbo.github.io/LstSqtMth2/">逐次最小二乗法</a>
+    を適用します。</p>
+
+  <p>逐次最小二乗法を適用するために、式\eqref{eq:DiscStateEq}を次式のように変形します。</p>
     \begin{align}
       \mathbf{x}(n+1) = [\mathbf{P}~~\mathbf{Q}]
       \left[
@@ -59,31 +65,39 @@
       \right] \label{eq:DiscStateEq2}
     \end{align}    
 
-  <p>ここで、ベクトル\(\mathbf{x}(n+1)\)を\(\mathbf{y}(n)\)、
-    \([\mathbf{x}(n)~~\mathbf{u}(n)]^T\)を\(\mathbf{x}(n)\)、
-    行列\([\mathbf{P}~~\mathbf{Q}]\)を\(\mathbf{A}\)と表記すると、
-    式\eqref{eq:DiscStateEq}が
-    <a href="https://aoyamakohbo.github.io/LstSqtMth2/">最小二乗法</a>
-    の形式になっていることが確認できます。</p>
-
-    \begin{align}
+  <p>\(\mathbf{y}(n)=\mathbf{x}(n+1)\)、
+    行列\([\mathbf{P}~~\mathbf{Q}]=\mathbf{A}\)、
+    \([\mathbf{x}(n)~~\mathbf{u}(n)]^T\)を改めて\(\mathbf{x}(n)\)と表記します。
+    式\eqref{eq:DiscStateEq}が逐次最小二乗法を適用可能な一次式に変形できます。
+  </p>
+  \begin{align}
       \mathbf{y}(n) = \mathbf{A}\mathbf{x}(n) \label{eq:LstEQ}
-    \end{align}
+  \end{align}
 
-  <p>式\eqref{eq:LstEQ}に次式の<a href="https://aoyamakohbo.github.io/LstSqtMth2/">逐次最小二乗法</a>
-    を適用します。</p>
+  <p>式\eqref{eq:LstEQ}に対して次式の逐次最小二乗法を適用します。</p>  
   \begin{align}
     \left.
     \begin{array}{@{\,}rl}
       \mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\\
-      \mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{R}(n)\nonumber\\
+      \mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{R}(n)\\
       \mathbf{R}(n)&=~\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{1}{\mu}\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)\\
       \mu&=~\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)
-    \end{array}
+    \end{array}\label{eq:RtLstMtd}
     \right\}
   \end{align}
 
-<p>最小二乗法によって得られる係数行列\([\mathbf{P}_L~~\mathbf{Q}_L]=\mathbf{A}_L\)は下記となります。</p>
+  <p>初期値\(\mathbf{A}(0)=\mathbf{O}\)(零行列)、\(\mathbf{R}(0)=\mathbf{I}\)(単位行列)、
+    \(\lambda=1\)に設定します。</p>
+   
+  <p>離散時間状態方程式\eqref{eq:DiscStateEq}による変位\(x\)と速度\(\dot x\)と、
+    これに対して最小二乗法を適用して計算される変位\(x\)と速度\(\dot x\)を描画した結果は下図となります。
+    この図では離散時間状態方程式\eqref{eq:DiscStateEq}の計算結果を赤い点、
+    逐次最小二乗法\eqref{eq:LstEQ}、\eqref{eq:RtLstMtd}の計算結果を青線で示しています。</p>
+
+  <img src="LstVib_1D.jpg" width=600px>
+ 
+  <p>逐次最小二乗法は非常に良い一致を示しています。</p>
+  <p>逐次最小二乗法\eqref{eq:RtLstMtd}により得られた係数行列\([\mathbf{P}_L~~\mathbf{Q}_L]\)は下記となります。</p>
   \begin{align}
     \mathbf{P}_L=
       \left[
@@ -101,10 +115,7 @@
       \right].
         \label{eq:MatLst}
   \end{align}
-
-  <p>離散時間状態方程式と最小二乗法で計算される変位\(x\)と速度\(\dot x\)は下図となります。</p>
-
-  <img src="LstVib_1D.jpg" width=600px>
+<p>逐次最小二乗法で得られた係数行列\eqref{eq:MatLst}は元の係数行列\eqref{eq:RtnEqn}に近い値を示しています。</p>
 
 <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
 </body>
