@@ -67,10 +67,23 @@
     の形式になっていることが確認できます。</p>
 
     \begin{align}
-      \mathbf{y}(n) = \mathbf{A}\mathbf{x}(n)
+      \mathbf{y}(n) = \mathbf{A}\mathbf{x}(n) \label{eq:LstEQ}
     \end{align}
 
-<p>最小二乗法によって得られた係数行列\([\mathbf{P}_L~~\mathbf{Q}_L]=\mathbf{A}_L\)は下記となります。</p>
+  <p>式\eqref{eq:LstEQ}に次式の<a href="https://aoyamakohbo.github.io/LstSqtMth2/">逐次最小二乗法</a>
+    を適用します。</p>
+  \begin{align}
+    \left.
+    \begin{array}{@{\,}rl}
+      \mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\\
+      \mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{R}(n)\nonumber\\
+      \mathbf{R}(n)&=~\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{1}{\mu}\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)\\
+      \mu&=~\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)
+    \end{array}
+    \right\}
+  \end{align}
+
+<p>最小二乗法によって得られる係数行列\([\mathbf{P}_L~~\mathbf{Q}_L]=\mathbf{A}_L\)は下記となります。</p>
   \begin{align}
     \mathbf{P}_L=
       \left[
