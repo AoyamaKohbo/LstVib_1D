@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="ja">
+
+  <head>
+     <script type="text/x-mathjax-config">
+
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+
+    </script>
+
+    <script type="text/javascript" async 
+
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+
+    </script>
+
+  </head>
+
+<body>
+<h3>最小二乗法の１自由度粘弾性振動系への適用</h3>
+
+  <p>係数行列\(\mathbf{P}\)、\(\mathbf{Q}\)を用いて
+    <a href="https://aoyamakohbo.github.io/VscElsVib1D/">１自由度粘弾性振動系</a>
+    の離散時間状態方程式は次式で記述されます。</p>
+    \begin{align}
+    \mathbf{x}(n+1)=\mathbf{P}\mathbf{x}(n) + \mathbf{Q}u(n) \label{eq:DiscStateEq}
+    \end{align}
+
+  <p>１自由度粘弾性振動系の固有振動数\(\omega_n=6.28×10\)[rad/s]、粘性係数\(\zeta=0.2\)、
+    サンプリング周期\(T=0.005\)[s]とすると、
+  行列\(\mathbf{P}\)、\(\mathbf{Q}\)は次式になります。</p>
+  \begin{align}
+    \mathbf{P}=
+      \left[
+        \begin{array}{@{\,}cc}
+          0.9531&0.004222\\
+          -18.23&0.8370
+        \end{array}
+      \right],~~~
+      \mathbf{Q}=
+      \left[
+        \begin{array}{@{\,}c}
+          -0.04691\\
+          18.23
+        \end{array}
+      \right].
+        \label{eq:RtnEqn}
+  \end{align}
+
+  <p>式\eqref{eq:DiscStateEq}を次式のように変形します。</p>
+    \begin{align}
+      \mathbf{x}(n+1) = [\mathbf{P}~~\mathbf{Q}]
+      \left[
+        \begin{array}{@{\,}c}
+          \mathbf{x}(n)\\
+          \mathbf{u}(n)
+        \end{array}
+      \right] \label{eq:DiscStateEq2}
+    \end{align}    
+
+  <p>ここで、ベクトル\(\mathbf{x}(n+1)\)を\(\mathbf{y}(n)\)、
+    \([\mathbf{x}(n)~~\mathbf{u}(n)]^T\)を\(\mathbf{x}(n)\)、
+    行列\([\mathbf{P}~~\mathbf{Q}]\)を\(\mathbf{A}\)と表記すると、
+    式\eqref{eq:DiscStateEq}が
+    <a href="https://aoyamakohbo.github.io/LstSqtMth2/">最小二乗法</a>
+    の形式になっていることが確認できます。</p>
+
+    \begin{align}
+      \mathbf{y}(n) = \mathbf{A}\mathbf{x}(n)
+    \end{align}
+
+<p>最小二乗法によって得られた係数行列\([\mathbf{P}_L~~\mathbf{Q}_L]=\mathbf{A}_L\)は下記となります。</p>
+  \begin{align}
+    \mathbf{P}_L=
+      \left[
+        \begin{array}{@{\,}cc}
+          0.9469&0.00599\\
+          -20.62&0.8279
+        \end{array}
+      \right],~~~
+      \mathbf{Q}_L=
+      \left[
+        \begin{array}{@{\,}c}
+          -0.05052\\
+          19.67
+        \end{array}
+      \right].
+        \label{eq:MatLst}
+  \end{align}
+
+  <p>離散時間状態方程式と最小二乗法で計算される変位\(x\)と速度\(\dot x\)は下図となります。</p>
+
+  <img src="LstVib_1D.jpg" width=600px>
+
+<p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
+</body>
+
+</html>
