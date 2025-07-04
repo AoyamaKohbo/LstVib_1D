@@ -27,7 +27,7 @@
     \mathbf{x}(n+1)=\mathbf{P}\mathbf{x}(n) + \mathbf{Q}u(n) \label{eq:DiscStateEq}
     \end{align}
 
-  <p>１自由度粘弾性振動系の固有振動数\(\omega_n=6.28×10\)[rad/s]、粘性係数\(\zeta=0.2\)、
+  <p>１自由度粘弾性振動系の固有振動数\(\omega_n=6.28\times 10\)[rad/s]、粘性係数\(\zeta=0.2\)、
     サンプリング周期\(T=0.005\)[s]とすると、
   行列\(\mathbf{P}\)、\(\mathbf{Q}\)は次式になります。</p>
   \begin{align}
@@ -48,37 +48,43 @@
         \label{eq:RtnEqn}
   \end{align}
 
-  <p>離散時間状態方程式\eqref{eq:DiscStateEq}で計算される状態\(x(n)\)、\(\dot x(n)\)
-    は逐次最小二乗法に対して計測結果を模擬します。離散時間状態方程式\eqref{eq:DiscStateEq}の
-    入力\(u(n)=\sin(2\pi fnT)\)に対して\(f=10\)[Hz]で変位\(x(n)\)、速度\(\dot{x}(n)\)を計算します。
-    その計算結果に次式の<a href="https://aoyamakohbo.github.io/LstSqtMth2/">逐次最小二乗法</a>
-    を適用します。</p>
+  <p>ここでは、離散時間状態方程式\eqref{eq:DiscStateEq}が\(\mathbf{x}(n)=[x(n)~~\dot x(n)]^T\)を生成し、
+    逐次最小二乗法の観測対象とします。</p>
+  <p>数値計算では、係数行列が式\eqref{eq:RtnEqn}として与えられているので、
+    逐次最小二乗法による係数行列の同定精度を確認できます。</p>
 
-  <p>逐次最小二乗法を適用するために、式\eqref{eq:DiscStateEq}を次式のように変形します。</p>
+  <p><a href="https://aoyamakohbo.github.io/LstSqtMth2/">逐次最小二乗法</a>
+    を適用するために、式\eqref{eq:DiscStateEq}を次式のように変形します。</p>
     \begin{align}
       \mathbf{x}(n+1) = [\mathbf{P}~~\mathbf{Q}]
       \left[
         \begin{array}{@{\,}c}
           \mathbf{x}(n)\\
-          \mathbf{u}(n)
+          u(n)
         \end{array}
       \right] \label{eq:DiscStateEq2}
-    \end{align}    
+    \end{align}
+
+  ここでは入力\(u(n)\)を次式で与えます。
+   \begin{align}    
+    u(n)=\sin(2\pi fnT)\label{eq:Input}
+   \end{align}
 
   <p>\(\mathbf{y}(n)=\mathbf{x}(n+1)\)、
     行列\([\mathbf{P}~~\mathbf{Q}]=\mathbf{A}\)、
-    \([\mathbf{x}(n)~~\mathbf{u}(n)]^T\)を改めて\(\mathbf{x}(n)\)と表記します。
+    \([\mathbf{x}(n)~~u(n)]^T\)を改めて\(\mathbf{x}(n)\)と表記します。
     式\eqref{eq:DiscStateEq}が逐次最小二乗法を適用可能な一次式に変形できます。
   </p>
   \begin{align}
       \mathbf{y}(n) = \mathbf{A}\mathbf{x}(n) \label{eq:LstEQ}
   \end{align}
 
-  <p>式\eqref{eq:LstEQ}に対して次式の逐次最小二乗法を適用します。</p>  
+  <p>式\eqref{eq:LstEQ}により観測対象の\(\mathbf{x}(n)\)、\(\mathbf{y}(n)\)を生成します。
+    これに対して次式の逐次最小二乗法を適用します。</p>  
   \begin{align}
     \left.
     \begin{array}{@{\,}rl}
-      \mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\\
+      \mathbf{A}_L(n)&=~\mathbf{A}_L(n-1)+\{\mathbf{y}(n)-\mathbf{A}_L(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\\
       \mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{R}(n)\\
       \mathbf{R}(n)&=~\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{1}{\mu}\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)\\
       \mu&=~\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)
@@ -86,9 +92,39 @@
     \right\}
   \end{align}
 
-  <p>初期値\(\mathbf{A}(0)=\mathbf{O}\)(零行列)、\(\mathbf{R}(0)=\mathbf{I}\)(単位行列)、
-    \(\lambda=1\)に設定します。</p>
-   
+  <p>初期値\(\mathbf{R}(0)=\mathbf{I}\)(単位行列)、
+    \(\lambda=1\)に設定します。係数行列\(\mathbf{P}_L\)、\(\mathbf{Q}_L\)の初期値を下記で設定し、</p>
+  \begin{align}
+    \mathbf{P}_L=
+      \left[
+        \begin{array}{@{\,}cc}
+          0&0\\
+          0&0
+        \end{array}
+      \right],~~~
+      \mathbf{Q}_L=
+      \left[
+        \begin{array}{@{\,}c}
+          0\\
+          0
+        \end{array}
+      \right],~~~
+      \mathbf{x}(0)=
+      \left[
+        \begin{array}{@{\,}c}
+          0\\
+          0\\
+          u(0)
+        \end{array}
+      \right],
+        \label{eq:MatLst0}
+  \end{align}
+  <p>\(\mathbf{A}_L(0)=[\mathbf{P}_L~~\mathbf{Q}_L]\)とします。
+    ただし、式\eqref{eq:RtLstMtd}において
+    \(\mathbf{A}_L(-1)=\mathbf{A}_L(0)\)、\(\mathbf{R}(-1)=\mathbf{R}(0)\)とします。</p>
+  <p>入力振動数\(f=10\)[Hz]で式\eqref{eq:Input}、\eqref{eq:LstEQ}、\eqref{eq:RtLstMtd}を実行し、
+    \(x(n)\)、\(\dot{x}(n)\)を計算します。</p>
+
   <p>離散時間状態方程式\eqref{eq:DiscStateEq}による変位\(x\)と速度\(\dot x\)と、
     これに対して最小二乗法を適用して計算される変位\(x\)と速度\(\dot x\)を描画した結果は下図となります。
     この図では離散時間状態方程式\eqref{eq:DiscStateEq}の計算結果を赤い点、
