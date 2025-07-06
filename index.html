@@ -79,8 +79,8 @@
       \mathbf{y}(n) = \mathbf{A}\mathbf{x}(n) \label{eq:LstEQ}
   \end{align}
 
-  <p>式\eqref{eq:LstEQ}により観測対象の\(\mathbf{x}(n)\)、\(\mathbf{y}(n)\)を生成します。
-    これに対して次式の逐次最小二乗法を適用します。</p>  
+  <p>式\eqref{eq:LstEQ}により観測対象として生成する\(\mathbf{x}(n)\)、\(\mathbf{y}(n)\)に対して次式の逐次最小二乗法を適用し、
+    係数行列(\(\mathbf{A}_L\)とする)を同定します。</p>  
   \begin{align}
     \left.
     \begin{array}{@{\,}rl}
@@ -92,7 +92,7 @@
     \right\}
   \end{align}
 
-  <p>初期値\(\mathbf{R}(0)=\mathbf{I}\)(単位行列)、
+  <p>式\eqref{eq:RtLstMtd}の初期値\(\mathbf{R}(0)=\mathbf{I}\)(単位行列)、
     \(\lambda=1\)に設定します。係数行列\(\mathbf{P}_L\)、\(\mathbf{Q}_L\)の初期値を下記で設定し、</p>
   \begin{align}
     \mathbf{P}_L=
